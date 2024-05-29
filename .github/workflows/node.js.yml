@@ -44,7 +44,7 @@ jobs:
       run: docker build -t ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}} .
 
     - name: Docker push
-      run: docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}} .
+      run: docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}} 
   
             
           
