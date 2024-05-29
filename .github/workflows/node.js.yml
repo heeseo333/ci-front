@@ -44,13 +44,13 @@ jobs:
         # Username used to log against the Docker registry
         username: ${{secret.DOCKER_USERNAME}}
         # Password or personal access token used to log against the Docker registry
-        password: ${{secret.DOCKER_PASSWORD}}
+        password: ${{secrets.DOCKER_PASSWORD}}
 
     - name: Docker build
-      run: docker build -t ${{secret.DOCKER_USERNAME}}/${{secret.DOCKER_REPO}} .
+      run: docker build -t ${{secrets.DOCKER_USERNAME}}/${{secret.DOCKER_REPO}} .
 
     - name: Docker push
-      run: docker push ${{secret.DOCKER_USERNAME}}/${{secret.DOCKER_REPO}} .
+      run: docker push ${{secrets.DOCKER_USERNAME}}/${{secret.DOCKER_REPO}} .
   
             
           
