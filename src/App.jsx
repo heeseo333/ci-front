@@ -13,14 +13,14 @@ function App() {
     setState({ ...state, [name]: value });
   };
   const onSubmitHandler = async () => {
-    const res = await axios.post(`/api/boards`, state);
+    const res = await axios.post(`/api/v1/boards`, state);
     if (res.status === 201) {
       getAllBoards();
       setState({ ...iState });
     }
   };
   const getAllBoards = async () => {
-    const res = await axios.get(`/api/boards`);
+    const res = await axios.get(`/api/v1/boards`);
     if (res.data) setBoards(res.data);
   };
   useEffect(() => {
