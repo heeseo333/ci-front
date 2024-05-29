@@ -7,8 +7,10 @@ function App() {
   const [response, setResponse] = useState(null);
   const [data, setData] = useState([]);
 
+  //"http://{location.host}:8080/api/v1/boards"
+
   const fetchBoards = async () => {
-    const req = await axios.get("http://34.28.151.210:8000/api/v1/boards");
+    const req = await axios.get("http://34.134.111.131:8080/api/v1/boards");
     setData(req.data);
   };
 
@@ -17,7 +19,7 @@ function App() {
 
     try {
       const res = await axios.post(
-        "http://34.28.151.210:8000/api/v1/boards",
+        "http://34.134.111.131:8080/api/v1/boards",
         data
       );
 
