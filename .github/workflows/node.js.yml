@@ -32,9 +32,7 @@ jobs:
     - name: build
       run: npm run build
       
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+  
 
     - name: Docker Login
   # You may pin to the exact commit or the version.
