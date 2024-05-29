@@ -1,69 +1,55 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-//ccc
+import "./App.css";
+const iState = {
+  name: "",
+  text: "",
+};
 function App() {
-  const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
-  const [response, setResponse] = useState(null);
-  const [data, setData] = useState([]);
-
-  //"http://{location.host}:8080/api/v1/boards"
-
-  const fetchBoards = async () => {
-    const req = await axios.get("http://35.226.34.1:8080/api/v1/boards");
-    setData(req.data);
+  const [state, setState] = useState({ ...iState });
+  const [boards, setBoards] = useState([]);
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
   };
-
-  const handleSubmit = async () => {
-    const data = { author, content };
-
-    try {
-      const res = await axios.post(
-        "http://35.226.34.1:8080/api/v1/boards",
-        data
-      );
-
-      if (res.status === 200) {
-        setResponse(res.data);
-      } else {
-        console.error("Failed to submit data:", res.data);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  const onSubmitHandler = async () => {
+    const res = await axios.post(`/api/boards`, state);
+    if (res.status === 201) {
+      getAllBoards();
+      setState({ ...iState });
     }
   };
-
+  const getAllBoards = async () => {
+    const res = await axios.get(`/api/boards`);
+    if (res.data) setBoards(res.data);
+  };
   useEffect(() => {
-    fetchBoards(); // Call fetchBoards as a function
-  }, []); // Run only once on component mount
-
+    getAllBoards();
+  }, []);
   return (
     <>
       <div>
-        <div>
-          <input
-            placeholder="name"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-          <input
-            placeholder="text"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </div>
-        <button onClick={handleSubmit}>submit</button>
+        <input
+          placeholder="name"
+          name="name"
+          value={state.name}
+          onChange={onChangeHandler}
+        />
+        <input
+          placeholder="text"
+          name="text"
+          value={state.text}
+          onChange={onChangeHandler}
+        />
+        <br />
+        <button onClick={onSubmitHandler}>submit</button>
       </div>
       <div>
-        <div>
-          {data.map((el, id) => (
-            <div key={id}>
-              <h3>Name: {el.author}</h3>
-              <p>Text: {el.content}</p>
-            </div>
-          ))}
-        </div>
+        {boards.map((data) => (
+          <div key={data.id}>
+            <b>{data.name}</b> : {data.text}
+          </div>
+        ))}
       </div>
     </>
   );
