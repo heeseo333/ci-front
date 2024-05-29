@@ -46,5 +46,14 @@ jobs:
     - name: Docker push
       run: docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}} 
   
-            
+    - name: ssh
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.ssh.HOST }}
+        username: ${{ secrets.ssh.USERNAME }}
+        ket: ${{ secrets.ssh.PASSWORD }
+        script: |
+          docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}}
+          docker rm -f ${{secrets.DOCKER_REPO}}
+          docker run --name ${{secrets.DOCKER_REPO}} -p 80:80 -d ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}}
           
