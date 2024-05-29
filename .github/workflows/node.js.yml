@@ -49,9 +49,9 @@ jobs:
     - name: ssh
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.ssh.HOST }}
-        username: ${{ secrets.ssh.USERNAME }}
-        ket: ${{ secrets.ssh.PASSWORD }
+        host: ${{ secrets.ssh_HOST }}
+        username: ${{ secrets.ssh_USERNAME }}
+        ket: ${{ secrets.ssh_PASSWORD }
         script: |
           docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPO}}
           docker rm -f ${{secrets.DOCKER_REPO}}
