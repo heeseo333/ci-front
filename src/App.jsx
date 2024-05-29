@@ -18,6 +18,7 @@ function App() {
       getAllBoards();
       setState({ ...iState });
     }
+    //
   };
   const getAllBoards = async () => {
     const res = await axios.get("/api/v1/boards");
@@ -30,14 +31,14 @@ function App() {
     <>
       <div>
         <input
-          placeholder="name"
-          name="name"
+          placeholder="author"
+          name="author"
           value={state.name}
           onChange={onChangeHandler}
         />
         <input
           placeholder="text"
-          name="text"
+          name="content"
           value={state.text}
           onChange={onChangeHandler}
         />
