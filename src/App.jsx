@@ -10,7 +10,7 @@ function App() {
   //"http://{location.host}:8080/api/v1/boards"
 
   const fetchBoards = async () => {
-    const req = await axios.get("http://34.134.111.131:8080/api/v1/boards");
+    const req = await axios.get("http://35.226.34.1:8080/api/v1/boards");
     setData(req.data);
   };
 
@@ -19,7 +19,7 @@ function App() {
 
     try {
       const res = await axios.post(
-        "http://34.134.111.131:8080/api/v1/boards",
+        "http://35.226.34.1:8080/api/v1/boards",
         data
       );
 
