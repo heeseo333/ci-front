@@ -31,7 +31,7 @@ function App() {
   const getAllBoards = async () => {
     try {
       const res = await axios.get("/api/v1/boards");
-      //if (res.data) setBoards(res.data);
+      if (res.data) setBoards(res.data);
     } catch (error) {
       console.error("Error getting boards:", error);
     }
