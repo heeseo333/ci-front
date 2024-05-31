@@ -1,45 +1,59 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-const iState = {
-  name: "",
-  text: "",
+
+const initialState = {
+  author: "",
+  content: "",
 };
+
 function App() {
-  const [state, setState] = useState({ ...iState });
+  const [state, setState] = useState({ ...initialState });
   const [boards, setBoards] = useState([]);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
+
   const onSubmitHandler = async () => {
-    const res = await axios.post("/api/v1/boards", state);
-    if (res.status === 201) {
-      getAllBoards();
-      setState({ ...iState });
+    try {
+      const res = await axios.post("/api/v1/boards", state);
+      if (res.status === 201) {
+        getAllBoards();
+        setState({ ...initialState });
+      }
+    } catch (error) {
+      console.error("Error submitting:", error);
     }
-    //
   };
+
   const getAllBoards = async () => {
-    const res = await axios.get("/api/v1/boards");
-    if (res.data) setBoards(res.data);
+    try {
+      const res = await axios.get("/api/v1/boards");
+      //if (res.data) setBoards(res.data);
+    } catch (error) {
+      console.error("Error getting boards:", error);
+    }
   };
+
   useEffect(() => {
     getAllBoards();
   }, []);
+
   return (
     <>
       <div>
         <input
           placeholder="author"
           name="author"
-          value={state.name}
+          value={state.author}
           onChange={onChangeHandler}
         />
         <input
-          placeholder="text"
+          placeholder="content"
           name="content"
-          value={state.text}
+          value={state.content}
           onChange={onChangeHandler}
         />
         <br />
@@ -48,7 +62,7 @@ function App() {
       <div>
         {boards.map((data) => (
           <div key={data.id}>
-            <b>{data.name}</b> : {data.text}
+            <b>{data.author}</b>: {data.content}
           </div>
         ))}
       </div>
